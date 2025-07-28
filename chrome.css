@@ -1,0 +1,49 @@
+
+@import "arcline/Arcline.css";
+
+/* These properties are shared by both border frames */
+#custom-border-inner-frame,
+#custom-border-outer-frame {
+  position: absolute !important;
+  box-sizing: border-box !important;
+  pointer-events: none !important; /* Make sure they are click-through */
+}
+
+/* --- THE OUTER BORDER (YOUR OUTLINE) --- */
+#custom-border-outer-frame {
+  /* Offset from the menu edge. Negative values move it OUTWARD. */
+  /* This is the shorthand for top, right, bottom, and left. */
+  inset: -1px !important; 
+  
+  /* --- OR control each side individually for custom margins --- */
+  /*
+  top: -1px !important;
+  left: -1px !important;
+  right: -5px !important;  -- Example: 5px margin on the right
+  bottom: -1px !important;
+  */
+
+  /* Border width, style, and RGBA color */
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: rgba(0, 0, 0, 0.8) !important; /* Black outline */
+  right: -1.5px !important;
+  /* Border Radius: Should be slightly larger than the inner border's radius */
+  border-radius: 6.5px !important; 
+}
+
+
+/* --- THE INNER BORDER (YOUR COVER-UP) --- */
+#custom-border-inner-frame {
+  /* Offset from the menu edge. 0px makes it flush with the edge. */
+  inset: 0.5px !important;
+  margin-right: -1px !important;
+  /* Border width, style, and RGBA color */
+  border-width: 0.5px !important;
+  border-style: solid !important;
+  filter: brightness(0.7) !important;
+  border-color: rgba(155, 155, 155, 1) !important; /* White cover-up */
+  
+  /* Border Radius: The base radius for the menu shape */
+  border-radius: 6.5px !important;
+}
