@@ -1,4 +1,5 @@
 // ==UserScript==
+// @ignorecache
 // @name           Structural Border Engine for Context Menus
 // @namespace      http://github.com/nclark
 // @description    ENGINE ONLY. Creates structural frames around menus. All styling MUST be done in userChrome.css.
@@ -69,42 +70,4 @@
 
 
 
-// ==UserScript==
-// @name           Context Tagger
-// @namespace      http://github.com/nclark
-// @description    ENGINE ONLY Part 2: Detects menu context and adds a 'data-menu-type' attribute to the container created by the border script.
-// @include        chrome://browser/content/browser.xhtml
-// @version        1.0.0
-// ==/UserScript==
-
-(function() {
-  const getMenuType = () => {
-    const context = gBrowser.selectedBrowser.contextMenu;
-    if (!context) return 'default';
-    if (context.onLink) return 'link';
-    if (context.onImage) return 'image';
-    return 'default';
-  };
-
-  const findAndTagContainer = (menuType) => {
-    const container = document.getElementById('custom-border-container');
-    if (container) {
-      container.setAttribute('data-menu-type', menuType);
-    } else {
-      // If the container isn't ready yet, try again on the next frame.
-      // This ensures this script works even if it runs before the border script.
-      requestAnimationFrame(() => findAndTagContainer(menuType));
-    }
-  };
-
-  const onPopupShowing = (event) => {
-    const popup = event.target;
-    if (!popup.localName.includes('menupopup')) return;
-    
-    const menuType = getMenuType();
-    findAndTagContainer(menuType);
-  };
-
-  window.addEventListener('popupshowing', onPopupShowing, false);
-  console.log('Context Tagger loaded.');
 })();
